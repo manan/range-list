@@ -1,28 +1,57 @@
 # Range List
 
-## Problem
+## Usage
 
-We are looking for a program that manages "intensity" by segments. Segments are intervals from -infinity to infinity, we
-liked you to implement functions that updates intensity by an integer amount for a given range. All intensity starts with 0.
+```javascript
+const { RangeList } = require('./core/RangeList');
 
-Please implement these two functions:
+const rangeList = new RangeList();
 
-- add(from, to, amount)
-- set(from, to, amount)
+// Add intensity to ranges
+rangeList.add(10, 30, 1);
+console.log(rangeList.toArray()); // [[10, 1], [30, 0]]
 
-Here is an example sequence (data stored as an array of start point and value for each segment):
+rangeList.add(20, 40, 1);
+console.log(rangeList.toArray()); // [[10, 1], [20, 2], [30, 1], [40, 0]]
 
+// Set intensity for a range
+rangeList.set(15, 25, 5);
+console.log(rangeList.toArray()); // [[10, 1], [15, 5], [25, 2], [30, 1], [40, 0]]
 ```
-Start: []
-Call: add(10, 30, 1) => [[10,1],[30,0]]
-Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
-Call: add(10, 40, -2) => [[10,-1],[20,0],[30,-1],[40,0]]
-```
 
-```
-Start: []
-Call: add(10, 30, 1) => [[10,1],[30,0]]
-Call: add(20, 40, 1) => [[10,1],[20,2],[30,1],[40,0]]
-Call: add(10, 40, -1) => [[20,1],[30,0]]
-Call: add(10, 40, -1) => [[10,-1],[20,0],[30,-1],[40,0]]
-```
+## API
+
+### `add(from, to, amount)`
+
+Adds the specified amount to the intensity in range [from, to).
+
+### `set(from, to, amount)`
+
+Sets the intensity to the specified amount in range [from, to).
+
+### `toArray()`
+
+Returns an array of [position, intensity] pairs representing all segments.
+
+## Design & Performance
+
+This implementation uses a self-balancing AVL tree data structure to efficiently track intensity breakpoints, with the following characteristics:
+
+### Runtime Complexity
+
+- **add/set operations**: O(k log n) where n is the total number of breakpoints and k is the number of points affected
+- **toArray**: O(n) to traverse all breakpoints
+
+### Design Trade-offs
+
+**AVL Tree vs. Sorted Array**
+
+- **✅ Pro**: O(log n) insertions/deletions instead of O(n)
+- **❌ Con**: Higher implementation complexity, slightly worse cache locality
+
+**Redundant Point Cleanup**
+
+- **✅ Pro**: Optimizes storage and improves query performance
+- **❌ Con**: Adds computational overhead after modifications
+
+This implementation prioritizes asymptotic efficiency for large datasets and frequent modifications over absolute minimal memory usage.
