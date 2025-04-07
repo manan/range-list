@@ -1,0 +1,17 @@
+{
+  "name": "jerry",
+  "description": "take home assignment for jerry",
+  "type": "module",
+  "scripts": {
+    "lint": "prettier -w . && eslint . --fix",
+    "test": "mocha test src/**/*.test.js"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "7.27.0",
+    "chai": "5.2.0",
+    "eslint": "8.24.0",
+    "eslint-config-prettier": "8.5.0",
+    "mocha": "11.1.0",
+    "prettier": "3.5.3"
+  }
+}
