@@ -33,6 +33,10 @@ Sets the intensity to the specified amount in range [from, to).
 
 Returns an array of [position, intensity] pairs representing all segments.
 
+## Tests
+<img width="570" alt="Screenshot 2025-04-06 at 8 29 51 PM" src="https://github.com/user-attachments/assets/bf93591d-52ba-4847-860a-419452b5864f" />
+
+
 ## Design & Performance
 
 This implementation uses a self-balancing AVL tree data structure to efficiently track intensity breakpoints, with the following characteristics:
